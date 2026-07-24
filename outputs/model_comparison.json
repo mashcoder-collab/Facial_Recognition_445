@@ -1,0 +1,6 @@
+{
+  "SVM (RBF)": 0.9333333333333333,
+  "KNN": 0.6,
+  "Logistic Regression": 0.9333333333333333,
+  "Random Forest": 0.9
+}
