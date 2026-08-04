@@ -1,0 +1,18 @@
+Best model: SVM (RBF)
+
+              precision    recall  f1-score   support
+
+    Person 0       1.00      1.00      1.00         3
+    Person 1       1.00      1.00      1.00         3
+    Person 2       1.00      1.00      1.00         3
+    Person 3       1.00      1.00      1.00         3
+    Person 4       1.00      0.67      0.80         3
+    Person 5       1.00      1.00      1.00         3
+    Person 6       1.00      1.00      1.00         3
+    Person 7       0.75      1.00      0.86         3
+    Person 8       1.00      1.00      1.00         3
+    Person 9       0.67      0.67      0.67         3
+
+    accuracy                           0.93        30
+   macro avg       0.94      0.93      0.93        30
+weighted avg       0.94      0.93      0.93        30
