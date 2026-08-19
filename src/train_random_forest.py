@@ -1,20 +1,27 @@
 import os
 import cv2
 import numpy as np
+import joblib
 
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 
 
-# Dataset location
+# ==========================================
+# 1. Dataset Location
+# ==========================================
+
 dataset_path = "../dataset"
 
 faces = []
 labels = []
 
 
-# Load images from 10 people
+# ==========================================
+# 2. Load Images from 10 People
+# ==========================================
+
 for person_id in range(1, 11):
 
     folder = f"s{person_id}"
@@ -32,10 +39,10 @@ for person_id in range(1, 11):
         if img is None:
             continue
 
-        # Resize image
+        # Resize image to 50 × 50
         img = cv2.resize(img, (50, 50))
 
-        # Convert image to feature vector
+        # Convert image to 1D feature vector
         faces.append(img.flatten())
 
         # Assign person label
@@ -46,7 +53,14 @@ faces = np.array(faces)
 labels = np.array(labels)
 
 
-# Split dataset into training and testing sets
+print("Faces shape:", faces.shape)
+print("Labels shape:", labels.shape)
+
+
+# ==========================================
+# 3. Split Dataset
+# ==========================================
+
 X_train, X_test, y_train, y_test = train_test_split(
     faces,
     labels,
@@ -55,25 +69,68 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 
-# Create Random Forest model
+print("Training images:", len(X_train))
+print("Testing images:", len(X_test))
+
+
+# ==========================================
+# 4. Create Random Forest Model
+# ==========================================
+
 rf = RandomForestClassifier(
     n_estimators=100,
     random_state=42
 )
 
 
-# Train the model
+# ==========================================
+# 5. Train the Model
+# ==========================================
+
 rf.fit(X_train, y_train)
 
 
-# Make predictions
+# ==========================================
+# 6. Test the Model
+# ==========================================
+
 predictions = rf.predict(X_test)
 
 
-# Calculate accuracy
 accuracy = accuracy_score(
     y_test,
     predictions
 )
 
 print("Random Forest Accuracy:", accuracy * 100, "%")
+
+
+# ==========================================
+# 7. Save the Trained Model
+# ==========================================
+
+# Create models directory if it doesn't exist
+models_path = "../models"
+
+os.makedirs(
+    models_path,
+    exist_ok=True
+)
+
+
+# Model file location
+model_file = os.path.join(
+    models_path,
+    "random_forest_model.pkl"
+)
+
+
+# Save model
+joblib.dump(
+    rf,
+    model_file
+)
+
+
+print("Random Forest model saved successfully!")
+print("Model location:", model_file)
